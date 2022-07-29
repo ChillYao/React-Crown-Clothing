@@ -1,7 +1,8 @@
 import React from 'react';
+import './category-item.component.scss';
 
 const CategoryItem = ({ id, category }) => {
-    console.log(id);
+    //console.log(id);
     return (
         <div key={id} className="category-container">
             <div

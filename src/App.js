@@ -1,5 +1,4 @@
 import React from 'react';
-import './categories.style.scss';
 import Directory from './components/directory/directory.component';
 
 const App = () => {

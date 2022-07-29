@@ -8,7 +8,7 @@ const Directory = ({ categories }) => {
         <div className="categories-container">
             {categories.map((category) => {
                 //console.log(category);
-                return <CategoryItem id={category.id} category={category} />;
+                return <CategoryItem key={category.id} category={category} />;
             })}
         </div>
     );

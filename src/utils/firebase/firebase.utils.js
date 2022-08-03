@@ -7,7 +7,7 @@ import {
     GoogleAuthProvider,
     getAuth,
     signInWithPopup,
-    signInWithRedirect,
+    createUserWithEmailAndPassword,
 } from 'firebase/auth';
 
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
@@ -26,19 +26,22 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 //Initialize the Signin Provider
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
 
 //Force the user to select account
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
     prompt: 'select_account',
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGooglePopup = () =>
+    signInWithPopup(auth, googleProvider);
 
 export const db = getFirestore();
 
 export const createUserDocumentFromAuth = async (userAuth) => {
+    if (!userAuth) return;
+
     //Three arguments: database, collection, identifier ('NikeAirMax', 'AdidasNMD' 之类的，是unique ID，类似主键)
     //google will create the user document if its uid is not exisiting in current collection
     const userDocRef = doc(db, 'user', userAuth.uid);
@@ -54,6 +57,7 @@ export const createUserDocumentFromAuth = async (userAuth) => {
         const { displayName, email } = userAuth;
         const createdAt = new Date();
         try {
+            //Save the user data in the Firebase document.
             await setDoc(userDocRef, { displayName, email, createdAt });
         } catch (error) {
             console.log('error when creating the user', error.message);
@@ -63,4 +67,10 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     //if user data exisit
     //return back this documents
     return userDocRef;
+};
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) return;
+
+    return await createUserWithEmailAndPassword(auth, email, password);
 };

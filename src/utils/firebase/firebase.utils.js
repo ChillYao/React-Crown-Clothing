@@ -39,7 +39,10 @@ export const signInWithGooglePopup = () =>
 
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (
+    userAuth,
+    additionalInformation
+) => {
     if (!userAuth) return;
 
     //Three arguments: database, collection, identifier ('NikeAirMax', 'AdidasNMD' 之类的，是unique ID，类似主键)
@@ -58,7 +61,13 @@ export const createUserDocumentFromAuth = async (userAuth) => {
         const createdAt = new Date();
         try {
             //Save the user data in the Firebase document.
-            await setDoc(userDocRef, { displayName, email, createdAt });
+            //additional Information is an object that conatains displayName when displayName is missing.
+            await setDoc(userDocRef, {
+                displayName,
+                email,
+                createdAt,
+                ...additionalInformation,
+            });
         } catch (error) {
             console.log('error when creating the user', error.message);
         }

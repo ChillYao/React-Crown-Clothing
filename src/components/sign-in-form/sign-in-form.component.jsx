@@ -20,11 +20,10 @@ const SignInForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const userCredential = await signInUserWithEmailAndPassword(
+            const { user } = await signInUserWithEmailAndPassword(
                 email,
                 password
             );
-            const user = userCredential.user;
             console.log(user);
         } catch (error) {
             const errorCode = error.code;
@@ -41,10 +40,7 @@ const SignInForm = () => {
 
     //Execute the sign in with google pop-up
     const logGoogleUser = async () => {
-        const response = await signInWithGooglePopup();
-        //console.log(response);
-        const { user } = response;
-        const userDocRef = await createUserDocumentFromAuth(user);
+        await signInWithGooglePopup();
     };
 
     return (

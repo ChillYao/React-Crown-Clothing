@@ -27,7 +27,7 @@ import {
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: 'AIzaSyDwmhxJHWUAokm_EPZtxhnP-f0kLv4Zo7U',
-    authDomain: 'fluffy-swan-8342cc.netlify.app',
+    authDomain: 'crwn-cloting-db-9352f.firebaseapp.com',
     projectId: 'crwn-cloting-db-9352f',
     storageBucket: 'crwn-cloting-db-9352f.appspot.com',
     messagingSenderId: '891071286606',
